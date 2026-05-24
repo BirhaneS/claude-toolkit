@@ -6,27 +6,32 @@ Personal collection of Claude Code skills, hooks, and configs.
 
 ### `chatgpt-to-claude`
 Migrate a ChatGPT data export into a structured knowledge base. Supports four
-output formats:
-
-- **Plain markdown** — flat folder of notes
-- **Categorized** — folders by topic
-- **Obsidian (basic)** — vault with frontmatter and tags
-- **Obsidian (Karpathy LLM Wiki)** — full pattern with `raw/`, `wiki/`, schema, index, log
+output formats: plain markdown, categorized folders, basic Obsidian vault, or
+full Karpathy-style LLM Wiki vault.
 
 See [`skills/chatgpt-to-claude/SKILL.md`](skills/chatgpt-to-claude/SKILL.md).
 
+## Hooks
+
+### `wiki-ingest`
+Auto-ingest every Claude Code session into a Karpathy-style LLM Wiki vault.
+Fires on the `Stop` event, categorizes the conversation via `claude` CLI, and
+files it into `<vault>/raw/<category>/`.
+
+See [`hooks/wiki-ingest/README.md`](hooks/wiki-ingest/README.md).
+
 ## Installation
 
-To use the skills in Claude Code:
-
 ```bash
-# Clone this repo
-git clone https://github.com/BirhaneS/claude-toolkit.git ~/code/claude-toolkit
+# Clone the repo
+git clone git@github.com:BirhaneS/claude-toolkit.git ~/code/claude-toolkit
 
-# Symlink the skills into your Claude config
+# Install a skill (symlink into ~/.claude/skills)
 mkdir -p ~/.claude/skills
 ln -s ~/code/claude-toolkit/skills/chatgpt-to-claude ~/.claude/skills/chatgpt-to-claude
+
+# Install a hook (symlink + add to ~/.claude/settings.json — see each hook's README)
 ```
 
-Then in any Claude Code session, the skill will be available — invoke with
-`/chatgpt-to-claude` or let Claude discover it automatically when relevant.
+Skills become available in any Claude Code session — invoke with `/<skill-name>`
+or let Claude discover them automatically when relevant.
